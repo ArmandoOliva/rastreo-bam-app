@@ -4,7 +4,7 @@ import 'package:rastreo_bam/models/models.dart';
 import 'package:rastreo_bam/screens/screens.dart';
 
 class AppRoute {
-  static const String initialRoute = 'login';
+  static const String initialRoute = 'home';
 
   static final List<MenuOption> menuOptions = [
     MenuOption(

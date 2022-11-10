@@ -14,5 +14,10 @@ class AppTheme {
       color: primary,
       elevation: 0,
     ),
+
+    //
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      selectedItemColor: secondary,
+    ),
   );
 }
