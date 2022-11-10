@@ -4,21 +4,20 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:rastreo_bam/providers/providers.dart';
 import 'package:rastreo_bam/services/services.dart';
-import 'package:rastreo_bam/ui/inputs_decoration.dart';
-import 'package:rastreo_bam/widgets/custom_circular_progress.dart';
+import 'package:rastreo_bam/themes/app_theme.dart';
+import 'package:rastreo_bam/widgets/widgets.dart';
+import 'package:rastreo_bam/ui/ui.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // authProvider.login('enviagt', '12345');
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _headerLogin(),
+            const HeaderLogin(),
             ChangeNotifierProvider(
               create: (_) => LoginFromProvider(),
               child: const LoginForm(),
@@ -30,24 +29,29 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-Container _headerLogin() {
-  return Container(
-    width: double.infinity,
-    height: 300,
-    decoration: const BoxDecoration(
-      color: Color.fromRGBO(28, 42, 87, 1),
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(20),
-        bottomRight: Radius.circular(20),
+class HeaderLogin extends StatelessWidget {
+  const HeaderLogin({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 300,
+      decoration: const BoxDecoration(
+        color: AppTheme.primary,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
       ),
-    ),
-    child: const Center(
-      child: Image(
-        image: AssetImage('logo.png'),
-        height: 180,
+      child: const Center(
+        child: Image(
+          image: AssetImage('logo.png'),
+          height: 180,
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class LoginForm extends StatelessWidget {
@@ -91,32 +95,17 @@ class LoginForm extends StatelessWidget {
               },
             ),
             const SizedBox(height: 10),
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    const Color.fromRGBO(251, 61, 1, 1),
+                    AppTheme.secondary,
                   ),
                 ),
                 onPressed: loginForm.isLoading
                     ? null
-                    : () async {
-                        FocusScope.of(context).unfocus();
-                        if (!loginForm.isValidForm()) return;
-
-                        loginForm.isLoading = true;
-
-                        final String? errorMessage = await AuthService.login(
-                            loginForm.username, loginForm.password);
-
-                        if (errorMessage == null) {
-                          Navigator.pushReplacementNamed(context, 'home');
-                        } else {
-                          print(errorMessage);
-                          loginForm.isLoading = false;
-                        }
-                      },
+                    : () => _login(context, loginForm),
                 child: Text(loginForm.isLoading ? 'Espere' : 'Iniciar sesión'),
               ),
             ),
@@ -125,4 +114,26 @@ class LoginForm extends StatelessWidget {
       ),
     );
   }
+}
+
+void _login(BuildContext context, LoginFromProvider loginForm) async {
+  FocusScope.of(context).unfocus();
+  if (!loginForm.isValidForm()) return;
+
+  await EasyLoading.show(
+    status: 'Validando credenciales...',
+    maskType: EasyLoadingMaskType.black,
+  );
+
+  loginForm.isLoading = true;
+
+  await AuthService.login(loginForm.username, loginForm.password).then((value) {
+    EasyLoading.dismiss();
+    if (value == null) {
+      Navigator.pushReplacementNamed(context, 'home');
+    } else {
+      Alert(context, title: 'Error', text: value);
+      loginForm.isLoading = false;
+    }
+  });
 }

@@ -33,12 +33,12 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future logout() async {
+  static Future logout() async {
     await storage.deleteAll();
     return;
   }
 
-  Future<String> readToken() async {
+  static Future<String> readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
 }
