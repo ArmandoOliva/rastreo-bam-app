@@ -5,7 +5,7 @@ import 'package:rastreo_bam/models/models.dart' show User;
 import 'package:rastreo_bam/services/services.dart' show HttpService;
 
 class AuthService extends ChangeNotifier {
-  static const storage = FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage();
 
   static Future<String?> login(String username, String password) async {
     try {
@@ -23,7 +23,10 @@ class AuthService extends ChangeNotifier {
       final String mensaje = data.mensaje ?? '';
 
       if (data.token != null && data.token!.isNotEmpty) {
-        await storage.write(key: 'token', value: data.token);
+        await _storage.write(key: 'usr_token', value: data.token);
+        await _storage.write(key: 'usr_id', value: data.idUsr);
+        await _storage.write(key: 'usr_cod', value: data.usrCod);
+        await _storage.write(key: 'usr_nombre', value: data.usrNombre);
         return null;
       } else {
         return mensaje;
@@ -34,11 +37,19 @@ class AuthService extends ChangeNotifier {
   }
 
   static Future logout() async {
-    await storage.deleteAll();
+    await _storage.deleteAll();
     return;
   }
 
   static Future<String> readToken() async {
-    return await storage.read(key: 'token') ?? '';
+    return await _storage.read(key: 'token') ?? '';
+  }
+
+  static Future<Map<String, String>> readUserInfo() async {
+    Map<String, String> userInfo = {
+      'usr_cod': await _storage.read(key: 'usr_cod') ?? '',
+      'usr_nombre': await _storage.read(key: 'usr_nombre') ?? '',
+    };
+    return userInfo;
   }
 }

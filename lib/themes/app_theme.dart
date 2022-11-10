@@ -15,9 +15,12 @@ class AppTheme {
       elevation: 0,
     ),
 
-    //
+    // BottomNavigationBar Theme
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       selectedItemColor: secondary,
     ),
+
+    // ListTile Theme
+    listTileTheme: const ListTileThemeData(iconColor: secondary),
   );
 }

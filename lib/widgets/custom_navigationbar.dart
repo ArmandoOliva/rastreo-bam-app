@@ -25,7 +25,7 @@ class CustomNavigationBar extends StatelessWidget {
           label: 'Historial',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.supervised_user_circle),
+          icon: Icon(Icons.person),
           label: 'Perfil',
         ),
       ],

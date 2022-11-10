@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:rastreo_bam/services/services.dart' show BarcodeService;
 
 class ScanScreen extends StatelessWidget {
@@ -11,7 +12,8 @@ class ScanScreen extends StatelessWidget {
           onPressed: () async {
             final String? barcodeRes = await BarcodeService.scanBarcode();
             if (barcodeRes == null) print('Ha ocurrido un error');
-            print(barcodeRes);
+
+            await EasyLoading.showInfo('barcodeRes');
           },
           icon: const Icon(Icons.qr_code)),
     );
