@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show ChangeNotifier;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'package:rastreo_bam/models/models.dart';
-import 'package:rastreo_bam/services/http_service.dart';
+import 'package:rastreo_bam/models/models.dart' show User;
+import 'package:rastreo_bam/services/services.dart' show HttpService;
 
 class AuthService extends ChangeNotifier {
   static const storage = FlutterSecureStorage();

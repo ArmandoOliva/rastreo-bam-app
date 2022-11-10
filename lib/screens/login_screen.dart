@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:provider/provider.dart';
-import 'package:rastreo_bam/providers/providers.dart';
-import 'package:rastreo_bam/services/services.dart';
+import 'package:rastreo_bam/providers/providers.dart' show LoginFromProvider;
+import 'package:rastreo_bam/services/services.dart' show AuthService;
 import 'package:rastreo_bam/themes/app_theme.dart';
-import 'package:rastreo_bam/widgets/widgets.dart';
-import 'package:rastreo_bam/ui/ui.dart';
+import 'package:rastreo_bam/widgets/widgets.dart' show Alert;
+import 'package:rastreo_bam/ui/ui.dart' show InputsDecorations;
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -69,7 +69,14 @@ class LoginForm extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         child: Column(
           children: [
-            const Text('Rastreo'),
+            const Text(
+              'Rastreo App',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.text,
@@ -94,7 +101,7 @@ class LoginForm extends StatelessWidget {
                     : 'Contraseña inválida';
               },
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 15),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -109,6 +116,8 @@ class LoginForm extends StatelessWidget {
                 child: Text(loginForm.isLoading ? 'Espere' : 'Iniciar sesión'),
               ),
             ),
+            const SizedBox(height: 20),
+            const Text('Version 0.0.1'),
           ],
         ),
       ),
