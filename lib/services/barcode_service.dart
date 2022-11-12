@@ -5,8 +5,10 @@ class BarcodeService {
 
   static Future<String?> scanBarcode() async {
     try {
-      _barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#3D8BEF', 'Cancelar', false, ScanMode.BARCODE);
+      // _barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      // '#3D8BEF', 'Cancelar', false, ScanMode.BARCODE);
+      _barcodeScanRes = 'S164764';
+      Future.delayed(const Duration(seconds: 2));
       return _barcodeScanRes;
     } catch (e) {
       return '';
@@ -22,16 +24,4 @@ class BarcodeService {
       return '';
     }
   }
-
-  // static get barcodeRes async {
-  //   String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-  //       '#3D8BEF', 'Cancelar', false, ScanMode.BARCODE);
-  //   return barcodeScanRes;
-  // }
-
-  // static get scanQr async {
-  //   String barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-  //       '#3D8BEF', 'Cancelar', false, ScanMode.QR);
-  //   return barcodeScanRes;
-  // }
 }

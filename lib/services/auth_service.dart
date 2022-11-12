@@ -15,7 +15,7 @@ class AuthService extends ChangeNotifier {
         'version': '0.0.1'
       };
 
-      final res = await HttpService.postData('public/api_ae/login.php', args);
+      final res = await HttpService.postData('public/api/v2/login.php', args);
 
       if (res == null) return 'Ha ocurrido un error al momento iniciar sesión';
 
@@ -42,7 +42,8 @@ class AuthService extends ChangeNotifier {
   }
 
   static Future<String> readToken() async {
-    return await _storage.read(key: 'token') ?? '';
+    // return await _storage.read(key: 'token') ?? '';
+    return 'ec53d41df13d8cc718c3d4cd7d471d1a5e100e9e77b1b77493bd0da253ee5069';
   }
 
   static Future<Map<String, String>> readUserInfo() async {
@@ -51,5 +52,12 @@ class AuthService extends ChangeNotifier {
       'usr_nombre': await _storage.read(key: 'usr_nombre') ?? '',
     };
     return userInfo;
+  }
+
+  static Future<dynamic> getStorageKey(String key) async {
+    if (key == 'usr_token') {
+      return 'ec53d41df13d8cc718c3d4cd7d471d1a5e100e9e77b1b77493bd0da253ee5069';
+    }
+    return await _storage.read(key: key) ?? '';
   }
 }

@@ -39,6 +39,7 @@ dependencies:
   flutter_easyloading: ^3.0.5
   local_auth: ^2.1.2
   flutter_barcode_scanner: ^2.0.0
+  dropdown_search: ^5.0.3
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
